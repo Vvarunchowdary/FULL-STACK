@@ -1,157 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Student Query Portal</title>
+<meta charset="UTF-8">
+<title>Admin Complaint Dashboard</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f4f8;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #eef2f6;
+  margin: 0;
+}
 
-    header {
-      background: #2c3e50;
-      color: white;
-      padding: 15px;
-      text-align: center;
-    }
+header {
+  background: #1f2d3d;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
 
-    .container {
-      width: 90%;
-      max-width: 1000px;
-      margin: 20px auto;
-    }
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 20px auto;
+}
 
-    .card {
-      background: white;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-    }
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
 
-    h2 {
-      margin-top: 0;
-      color: #2c3e50;
-    }
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
-    input, textarea, select {
-      width: 100%;
-      padding: 8px;
-      margin-top: 6px;
-      margin-bottom: 12px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
 
-    button {
-      padding: 8px 14px;
-      background: #3498db;
-      border: none;
-      color: white;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+th {
+  background: #f4f6f8;
+}
 
-    button.vote {
-      background: #27ae60;
-    }
+select {
+  padding: 6px;
+}
 
-    .status {
-      font-size: 14px;
-      font-weight: bold;
-    }
+button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
-    .OPEN { color: red; }
-    .IN_PROGRESS { color: orange; }
-    .RESOLVED { color: green; }
+.resolve { background: #27ae60; color: white; }
+.progress { background: orange; color: white; }
+.delete { background: crimson; color: white; }
 
-    .complaint {
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 12px;
-      margin-bottom: 12px;
-    }
-  </style>
+</style>
 </head>
 
 <body>
 
 <header>
-  <h1>Student Query & Complaint Portal</h1>
+  <h1>Admin / Staff Complaint Dashboard</h1>
 </header>
 
 <div class="container">
 
-  <!-- LOGIN UI -->
-  <div class="card">
-    <h2>Login</h2>
-    <input type="text" placeholder="Username">
-    <input type="password" placeholder="Password">
-    <select>
-      <option>Student</option>
-      <option>Admin</option>
-      <option>Staff</option>
-    </select>
-    <button>Login</button>
-  </div>
+<div class="card">
+<h2>All Complaints</h2>
 
-  <!-- DASHBOARD -->
-  <div class="card">
-    <h2>Dashboard</h2>
-    <p>Welcome, <b>Student</b></p>
-  </div>
+<table>
+<thead>
+<tr>
+<th>Title</th>
+<th>Description</th>
+<th>Category</th>
+<th>Votes</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
 
-  <!-- COMPLAINT SUBMISSION -->
-  <div class="card">
-    <h2>Submit Complaint</h2>
+<tbody>
 
-    <label>Complaint Title</label>
-    <input type="text" placeholder="Enter title">
+<tr>
+<td>Broken Classroom Fans</td>
+<td>Fans in Block A are not working.</td>
+<td>Public - Infrastructure</td>
+<td>12</td>
+<td>
+<select>
+<option>OPEN</option>
+<option selected>IN_PROGRESS</option>
+<option>RESOLVED</option>
+</select>
+</td>
+<td>
+<button class="progress">Update</button>
+<button class="delete">Delete</button>
+</td>
+</tr>
 
-    <label>Description</label>
-    <textarea rows="4" placeholder="Describe your issue"></textarea>
+<tr>
+<td>Library Internet Issue</td>
+<td>WiFi speed is very slow.</td>
+<td>Public - Academic</td>
+<td>8</td>
+<td>
+<select>
+<option>OPEN</option>
+<option>IN_PROGRESS</option>
+<option selected>RESOLVED</option>
+</select>
+</td>
+<td>
+<button class="resolve">Update</button>
+<button class="delete">Delete</button>
+</td>
+</tr>
 
-    <label>Category</label>
-    <select>
-      <option>Public - Infrastructure</option>
-      <option>Public - Academic</option>
-      <option>Private - Personal Issue</option>
-    </select>
+<tr>
+<td>Bus Timing Problem</td>
+<td>College bus arrives late.</td>
+<td>Public - Transport</td>
+<td>20</td>
+<td>
+<select>
+<option>OPEN</option>
+<option selected>IN_PROGRESS</option>
+<option>RESOLVED</option>
+</select>
+</td>
+<td>
+<button class="progress">Update</button>
+<button class="delete">Delete</button>
+</td>
+</tr>
 
-    <button>Submit Complaint</button>
-  </div>
+</tbody>
+</table>
 
-  <!-- PUBLIC COMPLAINTS -->
-  <div class="card">
-    <h2>Public Complaints</h2>
-
-    <div class="complaint">
-      <h3>Broken Classroom Fans</h3>
-      <p>Fans in Block A are not working.</p>
-      <p>Votes: <b>12</b></p>
-      <p class="status OPEN">Status: OPEN</p>
-      <button class="vote">Upvote</button>
-    </div>
-
-    <div class="complaint">
-      <h3>Library Internet Issue</h3>
-      <p>WiFi speed is very slow in library.</p>
-      <p>Votes: <b>8</b></p>
-      <p class="status IN_PROGRESS">Status: IN PROGRESS</p>
-      <button class="vote">Upvote</button>
-    </div>
-
-    <div class="complaint">
-      <h3>Bus Timing Problem</h3>
-      <p>College bus arrives late in the evening.</p>
-      <p>Votes: <b>20</b></p>
-      <p class="status RESOLVED">Status: RESOLVED</p>
-    </div>
-
-  </div>
+</div>
 
 </div>
 
