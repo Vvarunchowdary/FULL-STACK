@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vel Tech Complaint Dashboard</title>
+
+<style>
+/* ---------- BASE ---------- */
+body {
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, #edf3ff, #dfe9f3);
+  margin: 0;
+}
+
+/* ---------- HEADER ---------- */
+.college-header {
+  background: linear-gradient(90deg, #0b2a5b, #123c7a);
+  padding: 18px 25px;
+  color: white;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-text {
+  text-align: center;
+  flex: 1;
+}
+
+.header-text h1 {
+  font-size: 22px;
+  margin: 0;
+  font-weight: 700;
+}
+
+.header-text p {
+  margin: 4px 0 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.logo {
+  height: 60px;
+}
+
+/* ---------- LAYOUT ---------- */
+.container {
+  width: 90%;
+  max-width: 1150px;
+  margin: 30px auto;
+}
+
+.card {
+  background: white;
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 45px rgba(0,0,0,0.15);
+}
+
+/* ---------- HEADINGS ---------- */
+h2 {
+  border-left: 6px solid #3498db;
+  padding-left: 12px;
+}
+
+/* ---------- FORM ---------- */
+input {
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+input:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+button {
+  padding: 9px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: .2s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+button:hover {
+  transform: translateY(-1px);
+  opacity: .9;
+}
+
+/* ---------- CATEGORY ---------- */
+.catBtn {
+  background: #ecf0f1;
+  margin-right: 6px;
+}
+
+.catBtn.active {
+  background: #3498db;
+  color: white;
+}
+
+/* ---------- TABLE ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th {
+  background: #f0f4f9;
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr {
+  transition: background .2s, transform .15s;
+}
+
+tbody tr:hover {
+  background: #f6faff;
+  transform: scale(1.002);
+}
+
+/* ---------- STATUS COLORS ---------- */
+tr.open { background: #ffffff; }
+tr.progressRow { background: #fff5dc; }
+tr.resolvedRow { background: #e9f9f0; }
+
+/* ---------- ACTION BUTTONS ---------- */
+.resolve { background: #2ecc71; color: white; }
+.progress { background: #f39c12; color: white; }
+.delete { background: #e74c3c; color: white; }
+
+/* ---------- FOOTER ---------- */
+footer {
+  text-align: center;
+  padding: 15px;
+  font-size: 13px;
+  color: #555;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="college-header">
+  <div class="header-content">
+
+    <img src="Veltech_Rangarajan_Dr._Sagunthala_R&D_Institute_of_Science_and_Technology_logo.png" class="logo" alt="Vel Tech Logo">
+
+    <div class="header-text">
+      <h1>Vel Tech Rangarajan Dr. Sagunthala R&D Institute of Science and Technology</h1>
+      <p>Admin / Staff Complaint Management Dashboard</p>
+    </div>
+
+    <img src="Veltech_Rangarajan_Dr._Sagunthala_R&D_Institute_of_Science_and_Technology_logo.png" class="logo" alt="Vel Tech Logo">
+
+  </div>
+</header>
+
+<!-- MAIN -->
+<div class="container">
+<div class="card">
+
+<h2>All Complaints</h2>
+
+<!-- ADD FORM -->
+<h3>Add New Complaint</h3>
+
+<div style="margin-bottom:18px;">
+
+  <input id="titleInput" placeholder="Enter title">
+  <input id="descInput" placeholder="Enter description">
+
+  <div style="margin:10px 0;">
+    <button class="catBtn" onclick="selectCategory(this)">Public - Infrastructure</button>
+    <button class="catBtn" onclick="selectCategory(this)">Public - Academic</button>
+    <button class="catBtn" onclick="selectCategory(this)">Public - Transport</button>
+  </div>
+
+  <button onclick="addComplaint()">➕ Add Complaint</button>
+</div>
+
+<!-- TABLE -->
+<table>
+<thead>
+<tr>
+<th>Title</th>
+<th>Description</th>
+<th>Category</th>
+<th>Votes</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+<tr class="progressRow">
+<td>Broken Classroom Fans</td>
+<td>Fans in Block A are not working.</td>
+<td>Public - Infrastructure</td>
+<td>12</td>
+<td>
+<select onchange="statusChanged(this)">
+<option>OPEN</option>
+<option selected>IN_PROGRESS</option>
+<option>RESOLVED</option>
+</select>
+</td>
+<td>
+<button class="progress">Update</button>
+<button class="delete" onclick="deleteRow(this)">Delete</button>
+</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+
+<footer>
+© 2026 Vel Tech University — Internal Administration Portal
+</footer>
+
+<!-- JAVASCRIPT -->
+<script>
+let selectedCategory = "";
+
+function selectCategory(btn) {
+  document.querySelectorAll(".catBtn")
+    .forEach(b => b.classList.remove("active"));
+
+  btn.classList.add("active");
+  selectedCategory = btn.innerText;
+}
+
+function addComplaint() {
+  const title = titleInput.value.trim();
+  const desc = descInput.value.trim();
+
+  if (!title || !desc || !selectedCategory) {
+    alert("Fill all fields and select category!");
+    return;
+  }
+
+  const tbody = document.querySelector("tbody");
+  const row = document.createElement("tr");
+  row.className = "open";
+
+  row.innerHTML = `
+    <td>${title}</td>
+    <td>${desc}</td>
+    <td>${selectedCategory}</td>
+    <td>0</td>
+    <td>
+      <select onchange="statusChanged(this)">
+        <option selected>OPEN</option>
+        <option>IN_PROGRESS</option>
+        <option>RESOLVED</option>
+      </select>
+    </td>
+    <td>
+      <button class="progress">Update</button>
+      <button class="delete" onclick="deleteRow(this)">Delete</button>
+    </td>
+  `;
+
+  tbody.appendChild(row);
+
+  titleInput.value = "";
+  descInput.value = "";
+  selectedCategory = "";
+
+  document.querySelectorAll(".catBtn")
+    .forEach(b => b.classList.remove("active"));
+}
+
+function statusChanged(select) {
+  const row = select.closest("tr");
+
+  row.classList.remove("open", "progressRow", "resolvedRow");
+
+  if (select.value === "OPEN") row.classList.add("open");
+  if (select.value === "IN_PROGRESS") row.classList.add("progressRow");
+  if (select.value === "RESOLVED") row.classList.add("resolvedRow");
+}
+
+function deleteRow(btn) {
+  btn.closest("tr").remove();
+}
+</script>
+
+</body>
+</html>
